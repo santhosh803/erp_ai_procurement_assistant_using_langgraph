@@ -1,0 +1,72 @@
+Vendor Master Sample (Plain Text)
+=================================
+
+Overview
+--------
+This sample illustrates typical vendor master data fields for SAP S/4HANA Sourcing and Procurement scenarios.[web:1]
+
+Vendor 10000001
+----------------
+General Data
+- Vendor Number: 10000001
+- Name: ABC Components Pvt Ltd
+- Search Term: ABC COMPONENTS
+- Street: 12, Outer Ring Road
+- City: Bengaluru
+- Postal Code: 560103
+- Country: IN
+- Region: KA
+- Language: EN
+
+Company Code Data
+- Company Code: 1000
+- Reconciliation Account: 140000 - Trade Payables Domestic
+- Payment Terms: 0001 - 30 Days
+- Payment Method: T - Bank Transfer
+- Tolerance Group: V1
+
+Purchasing Data
+- Purchasing Organization: 1000
+- Order Currency: INR
+- Incoterms: FOB
+- Incoterms Location: Bengaluru
+- GR-Based IV: Yes
+- Planned Delivery Time: 7 days
+
+Contact Person
+- Name: Rohan Mehta
+- Telephone: +91-80-1234-5678
+- Email: rohan.mehta@abc-components.example
+
+Vendor 10000002
+----------------
+General Data
+- Vendor Number: 10000002
+- Name: Global IT Services Ltd
+- Search Term: GLOBAL IT
+- Street: 45, MG Road
+- City: Bengaluru
+- Postal Code: 560001
+- Country: IN
+- Region: KA
+- Language: EN
+
+Company Code Data
+- Company Code: 1000
+- Reconciliation Account: 140000 - Trade Payables Domestic
+- Payment Terms: 0002 - 15 Days, 2% Cash Discount
+- Payment Method: T - Bank Transfer
+- Tolerance Group: V2
+
+Purchasing Data
+- Purchasing Organization: 1000
+- Order Currency: INR
+- Incoterms: CIF
+- Incoterms Location: Bengaluru
+- GR-Based IV: No (service provider)
+- Planned Delivery Time: 5 days
+
+Contact Person
+- Name: Ananya Rao
+- Telephone: +91-80-5678-1234
+- Email: ananya.rao@global-it.example

@@ -1,0 +1,14 @@
+langchain
+langchain-community
+langchain-huggingface
+langchain-core>=0.3.0
+langgraph>=0.2.50
+sentence-transformers
+faiss-cpu
+fastapi
+uvicorn[standard]
+streamlit
+huggingface_hub
+python-dotenv
+pypdf
+typing-extensions>=4.7

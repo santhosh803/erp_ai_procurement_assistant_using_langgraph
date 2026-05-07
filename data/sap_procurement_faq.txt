@@ -1,0 +1,38 @@
+SAP Procurement FAQ Dataset
+=============================
+
+Q1: What is a Purchase Requisition (PR)?
+A1: A PR is an internal document used to request the procurement of materials or services. It captures the requirement details and triggers the approval and sourcing process before a Purchase Order is created.[web:1]
+
+Q2: When should I create a PR instead of a direct PO?
+A2: Create a PR when end users need to request items and a buyer must perform sourcing, control budgets, or ensure approvals before a formal PO is sent to a supplier.
+
+Q3: What is a Purchase Order (PO)?
+A3: A PO is a legally binding document sent to a supplier that specifies materials or services, quantities, prices, delivery dates, and terms.[web:1]
+
+Q4: How is a PO created in the P2P process?
+A4: Buyers convert approved PRs or accepted supplier quotations into POs. The system copies master data such as material, supplier, and pricing conditions and can apply workflows and output rules.[web:1]
+
+Q5: What is Goods Receipt (GR)?
+A5: GR is the process of recording the receipt of goods or services against a PO. It updates stock, records quantities received, and supports three-way matching with the PO and invoice.
+
+Q6: What is Invoice Verification (IV)?
+A6: IV is the step where supplier invoices are checked against POs and GRs for quantity, price, and tax accuracy before posting to the ledger and generating open items for payment.[web:1]
+
+Q7: What is the GR/IR account?
+A7: The GR/IR (Goods Receipt/Invoice Receipt) clearing account temporarily holds the difference between received goods and posted invoices. When GR and invoice quantities and values match, the GR/IR balance for that item is cleared.
+
+Q8: What is the difference between a contract and a PO?
+A8: A contract defines agreed terms, conditions, and target quantities or values with a supplier over a period, while a PO is a specific order that calls off quantities or values against that contract.[web:1]
+
+Q9: Can I create a PO without a PR?
+A9: Yes, buyers can create POs directly in some scenarios (for example, recurring services or urgent purchases), but organizations typically restrict this using workflows and policies to maintain control.
+
+Q10: What is three-way matching?
+A10: Three-way matching compares the PO, GR, and invoice for quantity, price, and terms. Only if they match within tolerances is the invoice posted without manual intervention.
+
+Q11: How are service purchases handled?
+A11: Service purchases can use service items or lean services. After the supplier performs the service, a service entry sheet or confirmation is created and approved before invoice posting.[web:1]
+
+Q12: What are centrally managed purchase orders?
+A12: In Central Procurement scenarios, a central buying team in one system creates and manages POs on behalf of multiple connected backend systems to enable group-level control and analytics.[web:1]

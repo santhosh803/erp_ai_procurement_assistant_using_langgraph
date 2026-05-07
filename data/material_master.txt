@@ -1,0 +1,62 @@
+Material Master Sample (Plain Text)
+===================================
+
+Overview
+--------
+This sample illustrates core material master fields for materials used in sourcing and procurement in SAP S/4HANA.[web:1]
+
+Material MAT-1001
+------------------
+Basic Data
+- Material Number: MAT-1001
+- Description: Laptop Computer 14 inch
+- Base Unit of Measure: EA
+- Material Group: 0010 - IT Hardware
+- Division: 00
+
+Purchasing Data
+- Purchasing Group: 001 - IT Procurement
+- Order Unit: EA
+- Purchasing Value Key: STD
+- Planned Delivery Time (Days): 7
+- Standard Purchase Order Quantity: 5
+
+Plant Data (Plant 1100)
+- Plant: 1100
+- Storage Location: 0001
+- MRP Type: ND
+- Lot Size: EX
+- Reorder Point: 5 EA
+
+Accounting Data (Valuation Area 1100)
+- Valuation Class: 3000 - Finished Goods
+- Price Control: V (Moving Average)
+- Standard Price: 55,000.00 INR
+
+Material MAT-2005
+------------------
+Basic Data
+- Material Number: MAT-2005
+- Description: Wireless Mouse
+- Base Unit of Measure: EA
+- Material Group: 0010 - IT Hardware
+- Division: 00
+
+Purchasing Data
+- Purchasing Group: 001 - IT Procurement
+- Order Unit: EA
+- Purchasing Value Key: STD
+- Planned Delivery Time (Days): 5
+- Standard Purchase Order Quantity: 20
+
+Plant Data (Plant 1100)
+- Plant: 1100
+- Storage Location: 0001
+- MRP Type: ND
+- Lot Size: EX
+- Reorder Point: 20 EA
+
+Accounting Data (Valuation Area 1100)
+- Valuation Class: 3000 - Finished Goods
+- Price Control: V (Moving Average)
+- Standard Price: 800.00 INR
