@@ -1,38 +1,103 @@
 SAP Procurement FAQ Dataset
-=============================
+===========================
+
+Context: SAP S/4HANA Cloud (Public Edition), Sourcing and Procurement line of
+business. SAP S/4HANA Cloud is part of SAP Business Suite and runs on SAP
+Business Technology Platform (BTP), with AI capabilities embedded across
+procurement processes.
 
 Q1: What is a Purchase Requisition (PR)?
-A1: A PR is an internal document used to request the procurement of materials or services. It captures the requirement details and triggers the approval and sourcing process before a Purchase Order is created.[web:1]
+A1: A PR is an internal document used to request the procurement of materials or
+services. It captures the requirement (material/service, quantity, delivery date
+or service period, plant, account assignment) and triggers approval and sourcing
+before a Purchase Order is created. Self-Service Requisitioning and the
+professional "My Purchase Requisitions" Fiori apps are used to create and process
+PRs.
 
 Q2: When should I create a PR instead of a direct PO?
-A2: Create a PR when end users need to request items and a buyer must perform sourcing, control budgets, or ensure approvals before a formal PO is sent to a supplier.
+A2: Create a PR when end users need to request items and a buyer must perform
+sourcing, control budgets, or ensure approvals before a formal PO is sent to a
+supplier. Intake-management scenarios route all requests through a single entry
+point so they are captured, guided, and approved consistently.
 
 Q3: What is a Purchase Order (PO)?
-A3: A PO is a legally binding document sent to a supplier that specifies materials or services, quantities, prices, delivery dates, and terms.[web:1]
+A3: A PO is a legally binding document sent to a supplier that specifies
+materials or services, quantities, prices, delivery dates or service periods,
+and terms. PO numbers in this dataset follow the 45XXXXXXXX range.
 
 Q4: How is a PO created in the P2P process?
-A4: Buyers convert approved PRs or accepted supplier quotations into POs. The system copies master data such as material, supplier, and pricing conditions and can apply workflows and output rules.[web:1]
+A4: Buyers convert approved PRs or accepted supplier quotations into POs. The
+system copies master data such as material, supplier Business Partner, and
+pricing conditions, applies the calculation schema for net pricing and taxes, and
+can enforce flexible approval workflows and output rules. POs are transmitted via
+email, EDI, or SAP Business Network.
 
 Q5: What is Goods Receipt (GR)?
-A5: GR is the process of recording the receipt of goods or services against a PO. It updates stock, records quantities received, and supports three-way matching with the PO and invoice.
+A5: GR records the receipt of goods against a PO. It updates stock and valuation,
+records quantities received, posts accounting entries, and supports three-way
+matching with the PO and invoice. For services, a Service Entry Sheet or lean
+service confirmation is used instead of a physical goods receipt.
 
-Q6: What is Invoice Verification (IV)?
-A6: IV is the step where supplier invoices are checked against POs and GRs for quantity, price, and tax accuracy before posting to the ledger and generating open items for payment.[web:1]
+Q6: What is Invoice Verification (Supplier Invoice processing)?
+A6: Supplier invoices are checked against the PO and (where applicable) the GR
+for quantity, price, and tax accuracy before posting to the ledger and creating
+open payables. The Supplier Invoice Fiori apps support posting, parking, and the
+release of blocked invoices.
 
 Q7: What is the GR/IR account?
-A7: The GR/IR (Goods Receipt/Invoice Receipt) clearing account temporarily holds the difference between received goods and posted invoices. When GR and invoice quantities and values match, the GR/IR balance for that item is cleared.
+A7: The GR/IR (Goods Receipt/Invoice Receipt) clearing account temporarily holds
+the difference between received goods and posted invoices. When GR and invoice
+quantities and values match within tolerance, the GR/IR balance for that item is
+cleared.
 
-Q8: What is the difference between a contract and a PO?
-A8: A contract defines agreed terms, conditions, and target quantities or values with a supplier over a period, while a PO is a specific order that calls off quantities or values against that contract.[web:1]
+Q8: What is the difference between two-way and three-way matching?
+A8: Three-way matching compares PO, GR, and invoice for quantity, price, and
+terms (typical for materials). Two-way matching compares PO and invoice only
+(used where no goods receipt applies). Invoices outside tolerance are blocked for
+payment and routed for resolution.
 
-Q9: Can I create a PO without a PR?
-A9: Yes, buyers can create POs directly in some scenarios (for example, recurring services or urgent purchases), but organizations typically restrict this using workflows and policies to maintain control.
+Q9: What is the difference between a contract and a PO?
+A9: A contract (quantity or value) defines agreed terms, conditions, and targets
+with a supplier over a period; a PO is a specific order that calls off quantities
+or values against that contract. Contract Management sits within the Sourcing and
+Contract Management area.
 
-Q10: What is three-way matching?
-A10: Three-way matching compares the PO, GR, and invoice for quantity, price, and terms. Only if they match within tolerances is the invoice posted without manual intervention.
+Q10: Can I create a PO without a PR?
+A10: Yes, buyers can create POs directly in some scenarios (recurring services,
+urgent purchases), but organizations typically restrict this with workflows,
+thresholds, and policies to maintain control and auditability.
 
-Q11: How are service purchases handled?
-A11: Service purchases can use service items or lean services. After the supplier performs the service, a service entry sheet or confirmation is created and approved before invoice posting.[web:1]
+Q11: How are service purchases handled today?
+A11: Services are handled via Lean Services, SAP's strategic solution for service
+procurement. Service items use a service period (Start Date / End Date) rather
+than a single delivery date. After the supplier performs the service, a service
+entry sheet or confirmation is created and approved before invoice posting. The
+legacy MM-SRV model remains available but no longer receives functional
+enhancements.
 
-Q12: What are centrally managed purchase orders?
-A12: In Central Procurement scenarios, a central buying team in one system creates and manages POs on behalf of multiple connected backend systems to enable group-level control and analytics.[web:1]
+Q12: What is Central Procurement?
+A12: Central Procurement lets a central buying team in one hub system create and
+manage requisitions, purchase orders, and contracts on behalf of multiple
+connected backend systems, enabling group-level control, harmonized sourcing, and
+cross-system analytics.
+
+Q13: How does AI help in SAP procurement?
+A13: SAP embeds AI across the process. Joule, SAP's enterprise copilot, provides
+natural-language interaction and navigation - for example "show purchase orders"
+or "upload a supplier invoice" - and routes users to the right Fiori app under
+their existing authorizations. AI-assisted features such as Easy Filter
+(natural-language list filtering) and Smart Summarization speed up day-to-day
+work, and machine-learning analytics support spend visibility and supplier
+insights.
+
+Q14: How do suppliers collaborate electronically?
+A14: SAP Business Network supports PO transmission, order confirmations, advance
+shipping notifications, and electronic invoicing. Next-generation SAP Ariba adds
+Intake Management as a central entry point and Joule-assisted sourcing, rolling
+out progressively through 2026 and 2027.
+
+Q15: How are SAP S/4HANA Cloud releases delivered?
+A15: SAP S/4HANA Cloud Public Edition receives frequent releases identified by a
+YYMM code (for example 2508, 2602). The Private Edition follows an annual release
+(for example 2025) with feature pack stacks. New procurement capabilities are
+documented in each release's "What's New" notes.

@@ -1,14 +1,19 @@
-Pricing Conditions Example (Plain Text)
-======================================
+Pricing Conditions Example
+=======================================
 
 Overview
 --------
-This example shows typical purchasing pricing conditions used in SAP S/4HANA for procurement.[web:1]
+This example shows typical purchasing pricing conditions used in SAP S/4HANA
+Cloud for procurement. Purchasing pricing is determined by a calculation schema
+(condition technique): condition types (gross price, discounts, surcharges,
+freight, taxes) are read from condition records by access sequence and combined
+into the net and effective price. Condition records can be maintained at vendor/
+material, vendor/material-group, contract, or info-record level.
 
-Condition Record 1 – Material MAT-1001 with Vendor 10000001
------------------------------------------------------------
+Condition Record 1 - Material MAT-1001 with Supplier 10000001
+-------------------------------------------------------------
 Key
-- Vendor: 10000001 - ABC Components Pvt Ltd
+- Supplier (Business Partner): 10000001 - ABC Components Pvt Ltd
 - Material: MAT-1001 - Laptop Computer 14 inch
 - Purchasing Organization: 1000
 - Plant: 1100
@@ -17,14 +22,15 @@ Key
 
 Conditions
 - PB00 (Gross Price): 55,000.00 INR per EA
-- RA01 (Rebate): 2.0 %
-- FRA1 (Freight): 500.00 INR per delivery
+- RA01 (Discount % on Gross): 2.0 %
+- FRA1 (Freight %): handled per delivery
+- FRB1 (Freight Value): 500.00 INR per delivery
 - ZDS1 (Header Discount): 1.0 % for order value above 500,000.00 INR
 
-Condition Record 2 – Material MAT-2005 with Vendor 10000001
------------------------------------------------------------
+Condition Record 2 - Material MAT-2005 with Supplier 10000001
+-------------------------------------------------------------
 Key
-- Vendor: 10000001 - ABC Components Pvt Ltd
+- Supplier (Business Partner): 10000001 - ABC Components Pvt Ltd
 - Material: MAT-2005 - Wireless Mouse
 - Purchasing Organization: 1000
 - Plant: 1100
@@ -34,18 +40,45 @@ Key
 Conditions
 - PB00 (Gross Price): 800.00 INR per EA
 - ZQTY (Quantity Discount): 5.0 % for quantity >= 50 EA
-- FRA1 (Freight): 0.00 INR (freight included)
+- FRB1 (Freight Value): 0.00 INR (freight included)
 
-Condition Record 3 – Contract-Level Conditions (Material Group)
-----------------------------------------------------------------
+Condition Record 3 - Contract-Level Conditions (Material Group)
+---------------------------------------------------------------
 Key
-- Vendor: 10000002 - Global IT Services Ltd
+- Supplier (Business Partner): 10000002 - Global IT Services Ltd
 - Material Group: 0010 - IT Hardware
 - Purchasing Organization: 1000
 - Valid From: 2026-01-01
 - Valid To: 2026-12-31
 
 Conditions
-- PB00 (Gross Price): As per item
+- PB00 (Gross Price): As per item / call-off
 - ZCNT (Contract Discount): 3.0 % on all IT hardware items
-- ZPAY (Payment Discount): Additional 1.0 % for payment within 10 days
+- ZPAY (Payment Discount): additional 1.0 % for payment within 10 days
+
+Condition Record 4 - Service Conditions (Lean Services)
+-------------------------------------------------------
+Key
+- Supplier (Business Partner): 10000002 - Global IT Services Ltd
+- Service Material: MAT-3010 - On-site Hardware Installation Service
+- Purchasing Organization: 1000
+- Valid From: 2026-01-01
+- Valid To: 2026-12-31
+
+Conditions
+- PB00 (Gross Price): 1,200.00 INR per HUR (hour)
+- ZSVC (Service Volume Discount): 5.0 % for confirmed effort >= 40 HUR per month
+
+Tax Note
+--------
+- Output for India typically applies GST (e.g., 18%) determined via tax
+  condition types and the relevant tax code at invoice; tax is calculated on the
+  net value after purchasing discounts/surcharges.
+
+Notes
+-----
+- Pricing condition records are maintained via the Manage Purchasing Info
+  Records and condition-maintenance Fiori apps; contracts (quantity/value) carry
+  their own conditions that POs call off against.
+- Effective price (net price minus cash discount plus delivery costs) is used by
+  source-of-supply comparison and supplier evaluation analytics.

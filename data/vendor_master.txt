@@ -1,15 +1,21 @@
-Vendor Master Sample (Plain Text)
-=================================
+Supplier (Business Partner) Master Sample
+======================================================
 
 Overview
 --------
-This sample illustrates typical vendor master data fields for SAP S/4HANA Sourcing and Procurement scenarios.[web:1]
+This sample illustrates supplier master data for SAP S/4HANA Cloud Sourcing and
+Procurement. In SAP S/4HANA the legacy "vendor master" is unified under the
+Business Partner (BP) model: a single Business Partner is created once and
+assigned the Supplier role, then extended with company-code (financial) and
+purchasing-organization data. The Manage Business Partner Master Data Fiori apps
+are used to create and maintain these records.
 
-Vendor 10000001
-----------------
-General Data
-- Vendor Number: 10000001
+Business Partner / Supplier 10000001
+-------------------------------------
+General Data (BP, Supplier role)
+- Business Partner / Supplier Number: 10000001
 - Name: ABC Components Pvt Ltd
+- BP Category: Organization
 - Search Term: ABC COMPONENTS
 - Street: 12, Outer Ring Road
 - City: Bengaluru
@@ -18,31 +24,31 @@ General Data
 - Region: KA
 - Language: EN
 
-Company Code Data
-- Company Code: 1000
+Company Code Data (Company Code 1000)
 - Reconciliation Account: 140000 - Trade Payables Domestic
-- Payment Terms: 0001 - 30 Days
+- Payment Terms: 0001 - 30 Days net
 - Payment Method: T - Bank Transfer
 - Tolerance Group: V1
 
-Purchasing Data
-- Purchasing Organization: 1000
+Purchasing Data (Purchasing Org 1000)
 - Order Currency: INR
 - Incoterms: FOB
 - Incoterms Location: Bengaluru
-- GR-Based IV: Yes
+- GR-Based Invoice Verification: Yes
 - Planned Delivery Time: 7 days
+- SAP Business Network: connected (PO transmission and electronic invoicing)
 
 Contact Person
 - Name: Rohan Mehta
 - Telephone: +91-80-1234-5678
 - Email: rohan.mehta@abc-components.example
 
-Vendor 10000002
-----------------
-General Data
-- Vendor Number: 10000002
+Business Partner / Supplier 10000002
+-------------------------------------
+General Data (BP, Supplier role)
+- Business Partner / Supplier Number: 10000002
 - Name: Global IT Services Ltd
+- BP Category: Organization
 - Search Term: GLOBAL IT
 - Street: 45, MG Road
 - City: Bengaluru
@@ -51,22 +57,30 @@ General Data
 - Region: KA
 - Language: EN
 
-Company Code Data
-- Company Code: 1000
+Company Code Data (Company Code 1000)
 - Reconciliation Account: 140000 - Trade Payables Domestic
-- Payment Terms: 0002 - 15 Days, 2% Cash Discount
+- Payment Terms: 0002 - 15 Days, 2% cash discount within 10 days
 - Payment Method: T - Bank Transfer
 - Tolerance Group: V2
 
-Purchasing Data
-- Purchasing Organization: 1000
+Purchasing Data (Purchasing Org 1000)
 - Order Currency: INR
 - Incoterms: CIF
 - Incoterms Location: Bengaluru
-- GR-Based IV: No (service provider)
+- GR-Based Invoice Verification: No (service provider; confirmation-based)
 - Planned Delivery Time: 5 days
+- SAP Business Network: connected (service collaboration)
 
 Contact Person
 - Name: Ananya Rao
 - Telephone: +91-80-5678-1234
 - Email: ananya.rao@global-it.example
+
+Notes
+-----
+- Supplier evaluation (quality, delivery, price, service) feeds the Supplier
+  Management line of business and supports source determination.
+- Bank details, withholding-tax, and classification data are maintained on the
+  same Business Partner; one BP can hold both Customer and Supplier roles.
+- AI assistance (Joule) can surface supplier information conversationally, e.g.
+  "show purchase orders for supplier 10000001".

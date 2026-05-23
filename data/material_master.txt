@@ -1,15 +1,22 @@
-Material Master Sample (Plain Text)
+Material Master Sample
 ===================================
 
 Overview
 --------
-This sample illustrates core material master fields for materials used in sourcing and procurement in SAP S/4HANA.[web:1]
+This sample illustrates core material master fields used in Sourcing and
+Procurement in SAP S/4HANA Cloud (Public Edition). In SAP S/4HANA the material
+master is maintained per organizational level (client, plant, storage location,
+valuation area) and is grouped into views such as Basic Data, Purchasing, MRP,
+and Accounting. A "product type" distinguishes physical materials from services;
+service items are increasingly modeled with Lean Services, which is SAP's
+strategic direction for service procurement.
 
 Material MAT-1001
 ------------------
 Basic Data
 - Material Number: MAT-1001
 - Description: Laptop Computer 14 inch
+- Product Type: Material (physical)
 - Base Unit of Measure: EA
 - Material Group: 0010 - IT Hardware
 - Division: 00
@@ -20,24 +27,27 @@ Purchasing Data
 - Purchasing Value Key: STD
 - Planned Delivery Time (Days): 7
 - Standard Purchase Order Quantity: 5
+- Automatic PO Allowed: Yes
+- GR-Based Invoice Verification: Yes
 
 Plant Data (Plant 1100)
 - Plant: 1100
 - Storage Location: 0001
-- MRP Type: ND
-- Lot Size: EX
+- MRP Type: PD (MRP)
+- Lot Size: EX (lot-for-lot)
 - Reorder Point: 5 EA
 
-Accounting Data (Valuation Area 1100)
-- Valuation Class: 3000 - Finished Goods
+Accounting / Valuation Data (Valuation Area 1100)
+- Valuation Class: 3100 - Trading Goods
 - Price Control: V (Moving Average)
-- Standard Price: 55,000.00 INR
+- Standard / Moving Average Price: 55,000.00 INR
 
 Material MAT-2005
 ------------------
 Basic Data
 - Material Number: MAT-2005
 - Description: Wireless Mouse
+- Product Type: Material (physical)
 - Base Unit of Measure: EA
 - Material Group: 0010 - IT Hardware
 - Division: 00
@@ -48,15 +58,40 @@ Purchasing Data
 - Purchasing Value Key: STD
 - Planned Delivery Time (Days): 5
 - Standard Purchase Order Quantity: 20
+- Automatic PO Allowed: Yes
+- GR-Based Invoice Verification: Yes
 
 Plant Data (Plant 1100)
 - Plant: 1100
 - Storage Location: 0001
-- MRP Type: ND
-- Lot Size: EX
+- MRP Type: PD (MRP)
+- Lot Size: EX (lot-for-lot)
 - Reorder Point: 20 EA
 
-Accounting Data (Valuation Area 1100)
-- Valuation Class: 3000 - Finished Goods
+Accounting / Valuation Data (Valuation Area 1100)
+- Valuation Class: 3100 - Trading Goods
 - Price Control: V (Moving Average)
-- Standard Price: 800.00 INR
+- Standard / Moving Average Price: 800.00 INR
+
+Material MAT-3010 (Service)
+---------------------------
+Basic Data
+- Material Number: MAT-3010
+- Description: On-site Hardware Installation Service
+- Product Type: Service (Lean Services)
+- Base Unit of Measure: HUR (hour)
+- Material Group: 0090 - IT Services
+- Division: 00
+
+Purchasing Data
+- Purchasing Group: 001 - IT Procurement
+- Order Unit: HUR
+- Service Period: defined via Start Date and End Date on the requisition/PO item
+  (services are consumed over a period, not on a single delivery date)
+- Confirmation Required: Service Entry Sheet / lean service confirmation before
+  invoice posting
+- GR-Based Invoice Verification: Yes (service confirmation acts as the receipt)
+
+Account Assignment
+- Account Assignment Category: K (Cost Center) by default for indirect services
+- Valuation: non-stock; cost posted directly to the assigned account object
