@@ -23,7 +23,7 @@ st.set_page_config(
 API_URL = "http://localhost:8000/ask"
 
 NODE_ORDER = ["classifier", "retriever", "validator", "tool_caller",
-              "response_generator", "memory"]
+              "response_generator", "grader", "memory"]
 
 STATUS_COLOR = {"ok": "#16a34a", "skipped": "#d97706", "error": "#dc2626"}
 
@@ -213,6 +213,14 @@ def render_trace(turn: dict) -> None:
                     st.markdown("**Prompt (preview):**")
                     st.code(payload.get("prompt_preview", ""), language="text")
                     st.markdown("**Sources:** " + ", ".join(payload.get("sources", []) or []))
+                elif node == "grader":
+                    grade_val = payload.get("grade", "PASS").upper()
+                    st.markdown(f"**Decision:** `{grade_val}`")
+                    st.markdown(f"**Reason:** {payload.get('reason')}")
+                    if payload.get("rewritten_query"):
+                        st.markdown(f"**Rewritten Query:** `{payload.get('rewritten_query')}`")
+                    if st.checkbox("Show Raw Grader Output", key=f"raw_grader_{id(turn)}"):
+                        st.code(payload.get("raw_output", ""), language="text")
                 else:
                     st.json(payload)
 

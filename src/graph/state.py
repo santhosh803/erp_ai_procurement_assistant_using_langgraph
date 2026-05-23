@@ -60,6 +60,11 @@ class ProcurementState(TypedDict, total=False):
     answer: str
     sources: list[str]
 
+    # Grader
+    original_query: str
+    grader_decision: str
+    grader_reason: str
+
     # Memory
     memory_summary: str
 

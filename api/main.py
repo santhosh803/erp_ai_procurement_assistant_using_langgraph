@@ -98,6 +98,7 @@ def ask(request: AskRequest):
 
     initial_state: dict = {
         "query": request.query,
+        "original_query": request.query,
         "history": history_in,
         "memory_summary": request.memory_summary,
         "session_id": request.session_id,

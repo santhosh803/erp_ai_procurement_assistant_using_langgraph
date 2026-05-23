@@ -12,3 +12,7 @@ huggingface_hub
 python-dotenv
 pypdf
 typing-extensions>=4.7
+ragas
+datasets
+rank_bm25
+

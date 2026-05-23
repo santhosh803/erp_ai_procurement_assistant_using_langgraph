@@ -14,6 +14,9 @@ Edges:
     tool_caller ────────────────────────────────────► response_generator
     response_generator ─────────────────────────────► memory ─► END
 """
+import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from langgraph.graph import END, START, StateGraph
 
@@ -22,6 +25,7 @@ from src.graph.nodes import (
     call_tools,
     classify_query,
     generate,
+    grade_answer,
     retrieve_chunks,
     update_memory,
     validate_chunks,
@@ -51,6 +55,12 @@ def route_after_validator(state: dict) -> str:
     return "response_generator"
 
 
+def route_after_grader(state: dict) -> str:
+    if state.get("grader_decision") == "fail" and state.get("retrieval_attempt", 0) < MAX_RETRIEVAL_ATTEMPTS:
+        return "retriever"
+    return "memory"
+
+
 # ─────────────────── Graph construction ───────────────────────────────────────
 
 def _build_graph():
@@ -61,6 +71,7 @@ def _build_graph():
     builder.add_node("validator", validate_chunks)
     builder.add_node("tool_caller", call_tools)
     builder.add_node("response_generator", generate)
+    builder.add_node("grader", grade_answer)
     builder.add_node("memory", update_memory)
 
     builder.add_edge(START, "classifier")
@@ -87,7 +98,15 @@ def _build_graph():
     )
 
     builder.add_edge("tool_caller", "response_generator")
-    builder.add_edge("response_generator", "memory")
+    builder.add_edge("response_generator", "grader")
+    builder.add_conditional_edges(
+        "grader",
+        route_after_grader,
+        {
+            "retriever": "retriever",
+            "memory": "memory",
+        },
+    )
     builder.add_edge("memory", END)
 
     return builder.compile()
@@ -103,6 +122,7 @@ def run_graph(query: str, history: list[dict] | None = None,
     """Invoke the graph with a clean initial state."""
     initial_state: dict = {
         "query": query,
+        "original_query": query,
         "history": history or [],
         "memory_summary": memory_summary or "",
         "session_id": session_id,

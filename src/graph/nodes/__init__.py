@@ -6,6 +6,7 @@ from src.graph.nodes.response_generator import generate
 from src.graph.nodes.retriever import retrieve_chunks
 from src.graph.nodes.tool_caller import call_tools
 from src.graph.nodes.validator import validate_chunks
+from src.graph.nodes.grader import grade_answer
 
 __all__ = [
     "classify_query",
@@ -13,5 +14,6 @@ __all__ = [
     "validate_chunks",
     "call_tools",
     "generate",
+    "grade_answer",
     "update_memory",
 ]
