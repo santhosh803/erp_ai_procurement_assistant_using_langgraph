@@ -90,7 +90,6 @@ enhanced_erp_ai_procurement_assistant/
 │   ├── retriever.py            # FAISS similarity search
 │   ├── prompt_builder.py       # Context-injected prompts
 │   ├── llm_handler.py          # Qwen calls (generate_response + classify)
-│   ├── rag_pipeline.py         # (legacy linear pipeline — no longer wired)
 │   └── graph/                  # ◀ NEW — LangGraph workflow
 │       ├── state.py            # ProcurementState TypedDict
 │       ├── config.py           # Thresholds, templates, synonym map

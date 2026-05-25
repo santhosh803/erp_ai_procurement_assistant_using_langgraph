@@ -12,12 +12,10 @@ from huggingface_hub import InferenceClient
 
 load_dotenv()
 
-# ── Configuration 
-HF_TOKEN = os.getenv("HF_TOKEN")
-MODEL_ID = os.getenv("HF_MODEL_ID", "Qwen/Qwen2.5-7B-Instruct")
+from src.config import HF_TOKEN, HF_MODEL_ID
 
 # Initialize the client. It automatically picks up HF_TOKEN from the environment
-client = InferenceClient(model=MODEL_ID, token=HF_TOKEN)
+client = InferenceClient(model=HF_MODEL_ID, token=HF_TOKEN)
 
 
 def generate_response(prompt: str) -> str:
@@ -33,7 +31,8 @@ def generate_response(prompt: str) -> str:
     if not HF_TOKEN:
         return (
             "ERROR: HF_TOKEN is not set. "
-            "Please add your HuggingFace token to the .env file. "
+            "Please set your HuggingFace token as an environment variable or in the .env file. "
+            "On Hugging Face Spaces, you can add it as a Secret named 'HF_TOKEN' in the Space settings. "
             "Get your token at: https://huggingface.co/settings/tokens"
         )
 
@@ -76,7 +75,7 @@ def classify(prompt: str) -> str:
 if __name__ == "__main__":
     test_prompt = "What is a Purchase Order in SAP procurement? Answer in 2 sentences."
     print("Testing HuggingFace Inference API connection...")
-    print(f"Model : {MODEL_ID}")
+    print(f"Model : {HF_MODEL_ID}")
     print(f"Token : {HF_TOKEN[:10]}...{'*' * 20 if HF_TOKEN else 'MISSING'}\n")
     print(generate_response(test_prompt))
 

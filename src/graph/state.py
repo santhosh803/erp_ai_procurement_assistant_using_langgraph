@@ -8,66 +8,59 @@ append its own TraceEvent without clobbering prior events.
 
 from operator import add
 from typing import Annotated, Literal, Optional, TypedDict
+try:
+    from typing import NotRequired
+except ImportError:
+    from typing_extensions import NotRequired
 
 QueryType = Literal["factual_lookup", "workflow_guidance", "general_chat"]
 
-
-class Chunk(TypedDict, total=False):
+class Chunk(TypedDict):
     content: str
     source: str
-    score: Optional[float]
+    score: NotRequired[Optional[float]]
 
-
-class TraceEvent(TypedDict, total=False):
+class TraceEvent(TypedDict):
     node: str
     status: str          # "ok" | "skipped" | "error"
     duration_ms: float
-    summary: str
-    payload: dict
+    summary: NotRequired[str]
+    payload: NotRequired[dict]
 
-
-class ToolResult(TypedDict, total=False):
+class ToolResult(TypedDict):
     tool_name: str
     input: dict
     output: dict
 
-
-class ProcurementState(TypedDict, total=False):
-    # Input
+class ProcurementState(TypedDict):
+    # Input (Required)
     query: str
     session_id: str
     history: list[dict]                  # [{role: "user"|"assistant", content: str}]
 
-    # Classification
-    query_type: QueryType
-    classifier_raw: str
+    # Optional / Incremental state populated by nodes
+    query_type: NotRequired[QueryType]
+    classifier_raw: NotRequired[str]
 
-    # Retrieval
-    retrieval_k: int
-    retrieval_attempt: int
-    chunks: list[Chunk]
+    retrieval_k: NotRequired[int]
+    retrieval_attempt: NotRequired[int]
+    chunks: NotRequired[list[Chunk]]
 
-    # Validation
-    confidence: float
-    is_relevant: bool
-    validator_reason: str
+    confidence: NotRequired[float]
+    is_relevant: NotRequired[bool]
+    validator_reason: NotRequired[str]
 
-    # Tools
-    tool_results: list[ToolResult]
+    tool_results: NotRequired[list[ToolResult]]
 
-    # Generation
-    prompt: str
-    answer: str
-    sources: list[str]
+    prompt: NotRequired[str]
+    answer: NotRequired[str]
+    sources: NotRequired[list[str]]
 
-    # Grader
-    original_query: str
-    grader_decision: str
-    grader_reason: str
+    original_query: NotRequired[str]
+    grader_decision: NotRequired[str]
+    grader_reason: NotRequired[str]
 
-    # Memory
-    memory_summary: str
+    memory_summary: NotRequired[str]
 
-    # Observability — appendable across nodes
     trace: Annotated[list[TraceEvent], add]
-    error: Optional[str]
+    error: NotRequired[str]

@@ -16,13 +16,14 @@ from dotenv import load_dotenv
 # Ensure project root is in path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from src.config import HF_TOKEN, EMBEDDING_MODEL_ID, HF_MODEL_ID
 from src.graph.graph import run_graph
 from src.embedder import get_embedder
 
 # ── Load Environment Variables ────────────────────────────────────────────────
 load_dotenv()
 HF_TOKEN = os.getenv("HF_TOKEN")
-MODEL_ID = os.getenv("HF_MODEL_ID", "Qwen/Qwen2.5-7B-Instruct")
+
 
 # ── Golden Dataset of 20 Procurement QA Pairs ─────────────────────────────────
 GOLDEN_DATASET = [
@@ -174,7 +175,7 @@ def run_pipeline_eval():
         
         # Instantiate LangChain wrapper for Qwen
         llm = HuggingFaceEndpoint(
-            repo_id=MODEL_ID,
+            repo_id=HF_MODEL_ID,
             huggingfacehub_api_token=HF_TOKEN,
             temperature=0.01,
             max_new_tokens=512,
@@ -219,8 +220,8 @@ def write_markdown_report(data, scores, fallback=False, error_msg=""):
     with open(report_path, "w", encoding="utf-8") as f:
         f.write("# RAG Pipeline Evaluation Report\n\n")
         f.write(f"**Date:** {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"**Model Evaluated:** `{MODEL_ID}`\n")
-        f.write(f"**Embeddings Model:** `sentence-transformers/all-MiniLM-L6-v2`\n\n")
+        f.write(f"**Model Evaluated:** `{HF_MODEL_ID}`\n")
+        f.write(f"**Embeddings Model:** `{EMBEDDING_MODEL_ID}`\n\n")
         
         if fallback:
             f.write("> [!WARNING]\n")

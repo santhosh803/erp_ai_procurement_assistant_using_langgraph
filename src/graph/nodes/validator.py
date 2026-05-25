@@ -18,7 +18,7 @@ _TOKEN_RE = re.compile(r"[a-zA-Z]{2,}")
 
 
 def _tokens(text: str) -> set[str]:
-    return {t.lower() for t in _TOKEN_RE.findall(text or "") if t.lower() not in _STOPWORDS}
+    return {t for token in _TOKEN_RE.findall(text or "") if (t := token.lower()) not in _STOPWORDS}
 
 
 def _score(query: str, chunks: list[dict]) -> tuple[float, dict]:

@@ -13,6 +13,7 @@ from src.document_loader import load_documents
 from src.text_chunker import chunk_documents
 from src.embedder import get_embedder
 from src.vector_store import build_and_save_index
+from src.config import EMBEDDING_MODEL_ID
 
 
 def run_ingestion():
@@ -35,7 +36,7 @@ def run_ingestion():
     chunks = chunk_documents(documents, chunk_size=500, chunk_overlap=50)
 
     # Step 3: Load embedder
-    print("\n[3/4] Loading embedding model (all-MiniLM-L6-v2) ...")
+    print(f"\n[3/4] Loading embedding model ({EMBEDDING_MODEL_ID}) ...")
     embedder = get_embedder()
 
     # Step 4: Build and save FAISS index
