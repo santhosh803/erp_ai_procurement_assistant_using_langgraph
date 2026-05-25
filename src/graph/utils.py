@@ -2,11 +2,11 @@
 
 import time
 from functools import wraps
-from typing import Callable
+from typing import Callable, Optional
 
 
 def trace_event(node: str, *, status: str = "ok", duration_ms: float = 0.0,
-                summary: str = "", payload: dict | None = None) -> dict:
+                summary: str = "", payload: Optional[dict] = None) -> dict:
     """Build a single TraceEvent dict matching the state schema."""
     return {
         "node": node,

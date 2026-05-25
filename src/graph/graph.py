@@ -17,6 +17,7 @@ Edges:
 import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from typing import Optional
 
 from langgraph.graph import END, START, StateGraph
 
@@ -117,7 +118,7 @@ compiled_graph = _build_graph().with_config(recursion_limit=GRAPH_RECURSION_LIMI
 
 # ─────────────────── Convenience entry point ──────────────────────────────────
 
-def run_graph(query: str, history: list[dict] | None = None,
+def run_graph(query: str, history: Optional[list[dict]] = None,
               memory_summary: str = "", session_id: str = "default") -> dict:
     """Invoke the graph with a clean initial state."""
     initial_state: dict = {

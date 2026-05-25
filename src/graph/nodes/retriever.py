@@ -1,5 +1,7 @@
 """retrieve_chunks — wraps the existing FAISS Retriever class."""
 
+from typing import Optional
+
 from src.graph.config import DEFAULT_K, RETRY_K
 from src.graph.tools import expand_query
 from src.graph.utils import traced
@@ -7,7 +9,7 @@ from src.retriever import Retriever
 
 # Cached singleton — Retriever lazy-loads embedder + FAISS index on first use,
 # so repeated graph invocations don't repay that cost.
-_retriever: Retriever | None = None
+_retriever: Optional[Retriever] = None
 
 
 def _get_retriever(k: int) -> Retriever:

@@ -1,5 +1,7 @@
 """update_memory — deterministic rolling-window summary (no LLM call)."""
 
+from typing import Optional
+
 from src.graph.config import MEMORY_WINDOW
 from src.graph.utils import traced
 
@@ -10,7 +12,7 @@ _ANSWER_PREVIEW = 80   # answer preview length in summary line
 def _pair_turns(history: list[dict]) -> list[tuple[str, str]]:
     """Walk history into (user, assistant) pairs."""
     pairs: list[tuple[str, str]] = []
-    pending_user: str | None = None
+    pending_user: Optional[str] = None
     for msg in history or []:
         role = msg.get("role")
         content = (msg.get("content") or "")[:_TURN_LIMIT]
