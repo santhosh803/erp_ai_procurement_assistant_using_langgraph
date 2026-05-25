@@ -13,4 +13,4 @@ EMBEDDING_MODEL_ID = os.getenv("EMBEDDING_MODEL_ID", "sentence-transformers/all-
 # API Configuration
 API_PORT = int(os.getenv("API_PORT", "8000"))
 API_HOST = os.getenv("API_HOST", "0.0.0.0")
-API_URL = os.getenv("API_URL", f"http://localhost:{API_PORT}/ask")
+API_URL = os.getenv("API_URL", f"http://127.0.0.1:{API_PORT}/ask")

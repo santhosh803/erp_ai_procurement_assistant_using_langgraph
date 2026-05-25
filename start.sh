@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Start the FastAPI backend in the background (bind to localhost for security)
+# Start the FastAPI backend in the background (bind to 0.0.0.0 for reliability in Docker)
 echo "Starting FastAPI backend on port 8000..."
-uvicorn api.main:app --host 127.0.0.1 --port 8000 &
+uvicorn api.main:app --host 0.0.0.0 --port 8000 &
 
 # Wait for a few seconds to ensure the API starts up
 sleep 3
