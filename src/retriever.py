@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.embedder import get_embedder
 from src.vector_store import load_index
-from langchain_classic.retrievers import EnsembleRetriever
+from langchain.retrievers import EnsembleRetriever
 from langchain_community.retrievers import BM25Retriever
 
 
