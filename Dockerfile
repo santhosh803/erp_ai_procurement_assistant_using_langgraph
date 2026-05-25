@@ -21,11 +21,11 @@ ENV HOME=/home/user
 WORKDIR $HOME/app
 
 # Copy the rest of the application setting the owner to user 1000
-COPY --chown=user . .
+COPY --chown=user:user . .
 
 # Ensure the script has unix line endings and execution permission
 # Run this as root before switching user
-RUN dos2unix start.sh && chmod +x start.sh
+RUN dos2unix start.sh && chmod +x start.sh && chown -R user:user /home/user
 
 # Switch to the "user" user
 USER user
