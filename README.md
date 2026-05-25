@@ -10,9 +10,9 @@ pinned: false
 # ERP AI Procurement Assistant
 
 A **LangGraph-powered agentic RAG** assistant for SAP S/4HANA Sourcing & Procurement.
-Built on top of FAISS + Qwen2.5-7B (HuggingFace Inference API), wrapped in a
+Built on top of FAISS and BM25 (Hybrid Search with RRF) + Qwen2.5-7B (HuggingFace Inference API), wrapped in a
 multi-node `StateGraph` with classification, retrieval validation, optional
-tool calls, and short-term conversational memory.
+tool calls, LLM-as-a-Judge grading, and short-term conversational memory.
 
 The Streamlit UI surfaces the **graph execution trace** for every turn — node
 order, timings, intermediate state — so you can see exactly how each answer
@@ -32,12 +32,15 @@ flowchart TD
     V -->|workflow OR ID pattern| T[tool_caller]
     V -->|otherwise| RG
     T --> RG
-    RG --> M[memory]
+    RG --> G[grader]
+    G -->|pass OR general_chat| M[memory]
+    G -->|fail ∧ attempts<2| R
+    G -->|fail ∧ attempts>=2| M
     M --> END([END])
 
     classDef llm fill:#1d4ed8,stroke:#93c5fd,color:#fff
     classDef pure fill:#334155,stroke:#94a3b8,color:#e2e8f0
-    class C,RG llm
+    class C,RG,G llm
     class R,V,T,M pure
 ```
 
@@ -46,10 +49,11 @@ flowchart TD
 | Node | Role | LLM call? |
 |------|------|-----------|
 | `classifier` | Labels the query as **FACTUAL**, **WORKFLOW**, or **CHAT** to route the graph | ✅ (8-token, T=0) |
-| `retriever` | FAISS similarity search; bumps `k` and expands SAP acronyms on retry | ❌ |
+| `retriever` | Hybrid similarity search (FAISS + BM25 RRF); bumps `k` and expands SAP acronyms on retry | ❌ |
 | `validator` | Heuristic relevance score (keyword overlap × chunk length); triggers re-retrieval below threshold | ❌ |
 | `tool_caller` | Regex-driven helpers: `id_extractor` (PO/PR numbers), `step_counter` (workflow steps) | ❌ |
 | `response_generator` | Builds the final prompt (context + tool output + memory) and calls Qwen2.5-7B | ✅ |
+| `grader` | LLM-as-a-Judge evaluating response groundedness and completeness. Rewrites query on FAIL | ✅ |
 | `memory` | Maintains a deterministic rolling summary of the last 4 Q/A pairs | ❌ |
 
 Routing logic: `general_chat` short-circuits to the generator; low-confidence
@@ -69,7 +73,7 @@ The state schema, edges, and all node functions live under
 | Agent framework | **LangGraph** (StateGraph + conditional edges) |
 | LLM | Qwen2.5-7B via HuggingFace Inference API |
 | Embeddings | `all-MiniLM-L6-v2` (sentence-transformers) |
-| Vector DB | FAISS (CPU) |
+| Retrievers | FAISS (Dense) + BM25 (Sparse) with Reciprocal Rank Fusion (RRF) |
 | Backend | FastAPI |
 | Frontend | Streamlit (with execution-trace UI) |
 | Doc loaders / splitters | LangChain Community |
@@ -102,9 +106,11 @@ enhanced_erp_ai_procurement_assistant/
 │           ├── validator.py
 │           ├── tool_caller.py
 │           ├── response_generator.py
+│           ├── grader.py             # LLM-as-a-Judge node
 │           └── memory.py
 ├── api/main.py                 # FastAPI POST /ask (LangGraph-backed)
 ├── ui/app.py                   # Streamlit chat + trace viewer
+├── evaluate.py                 # Automated RAG evaluation (ragas framework)
 ├── faiss_index/                # Auto-created after ingestion
 ├── Dockerfile, start.sh
 ├── requirements.txt
@@ -142,7 +148,15 @@ python -m src.graph.graph
 
 This invokes the full graph with a single query and prints the trace.
 
-### 5. Start the API + UI
+### 5. Automated Evaluation (optional)
+
+```powershell
+python evaluate.py
+```
+
+Evaluates 20 golden queries using the `ragas` framework (Faithfulness, Context Precision, Answer Relevance) and outputs a detailed `evaluation_report.md`.
+
+### 6. Start the API + UI
 
 ```powershell
 uvicorn api.main:app --reload --port 8000
@@ -151,7 +165,7 @@ streamlit run ui/app.py
 
 Open <http://localhost:8501>.
 
-### 6. Docker / Hugging Face Spaces
+### 7. Docker / Hugging Face Spaces
 
 ```shell
 docker build -t erp-assistant .
