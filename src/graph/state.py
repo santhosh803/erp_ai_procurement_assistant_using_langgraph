@@ -7,7 +7,7 @@ append its own TraceEvent without clobbering prior events.
 """
 
 from operator import add
-from typing import Annotated, Literal, Optional, TypedDict
+from typing import Annotated, Dict, List, Literal, Optional, TypedDict
 try:
     from typing import NotRequired
 except ImportError:
@@ -36,7 +36,7 @@ class ProcurementState(TypedDict):
     # Input (Required)
     query: str
     session_id: str
-    history: list[dict]                  # [{role: "user"|"assistant", content: str}]
+    history: List[Dict]                  # [{role: "user"|"assistant", content: str}]
 
     # Optional / Incremental state populated by nodes
     query_type: NotRequired[QueryType]
@@ -44,17 +44,17 @@ class ProcurementState(TypedDict):
 
     retrieval_k: NotRequired[int]
     retrieval_attempt: NotRequired[int]
-    chunks: NotRequired[list[Chunk]]
+    chunks: NotRequired[List[Chunk]]
 
     confidence: NotRequired[float]
     is_relevant: NotRequired[bool]
     validator_reason: NotRequired[str]
 
-    tool_results: NotRequired[list[ToolResult]]
+    tool_results: NotRequired[List[ToolResult]]
 
     prompt: NotRequired[str]
     answer: NotRequired[str]
-    sources: NotRequired[list[str]]
+    sources: NotRequired[List[str]]
 
     original_query: NotRequired[str]
     grader_decision: NotRequired[str]
@@ -62,5 +62,5 @@ class ProcurementState(TypedDict):
 
     memory_summary: NotRequired[str]
 
-    trace: Annotated[list[TraceEvent], add]
+    trace: Annotated[List[TraceEvent], add]
     error: NotRequired[str]

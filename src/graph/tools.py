@@ -7,6 +7,7 @@ src/graph/state.py.
 """
 
 import re
+from typing import Set
 
 from src.graph.config import ID_PATTERN, STEP_INTENT_PATTERN, SYNONYM_MAP
 
@@ -44,7 +45,7 @@ def step_counter(chunks: list[dict]) -> dict:
     We look for "1.", "2.", "Step 3:", etc. and take the max integer seen as a
     proxy for total steps. This is a heuristic — good enough for SOP-style docs.
     """
-    seen: set[int] = set()
+    seen: Set[int] = set()
     text = "\n".join(c.get("content", "") for c in (chunks or []))
     for m in _STEP_LINE_RE.finditer(text):
         try:

@@ -10,6 +10,7 @@ side and ships it to the stateless FastAPI backend on every request.
 import uuid
 import concurrent.futures
 import time
+from typing import Dict, List
 
 import sys
 import os
@@ -69,9 +70,9 @@ if "session_id" not in st.session_state:
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
-def render_pipeline_strip(trace: list[dict]) -> str:
-    by_node: dict[str, dict] = {t["node"]: t for t in trace if "node" in t}
-    pieces: list[str] = []
+def render_pipeline_strip(trace: List[dict]) -> str:
+    by_node: Dict[str, dict] = {t["node"]: t for t in trace if "node" in t}
+    pieces: List[str] = []
     for i, name in enumerate(NODE_ORDER):
         icon = NODE_ICONS.get(name, "⚙️")
         if name in by_node:

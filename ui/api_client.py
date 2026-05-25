@@ -6,6 +6,7 @@ Handles the HTTP communication with the LangGraph FastAPI backend.
 import sys
 import os
 import requests
+from typing import List
 from pydantic import BaseModel, Field
 
 # Ensure project root is in path
@@ -34,21 +35,21 @@ class ToolResultModel(BaseModel):
 
 class AskRequest(BaseModel):
     query: str
-    history: list[HistoryTurn] = Field(default_factory=list)
+    history: List[HistoryTurn] = Field(default_factory=list)
     memory_summary: str = ""
     session_id: str = "default"
 
 class AskResponse(BaseModel):
     query: str
     answer: str
-    sources: list[str]
-    chunks: list[ChunkDetail]
+    sources: List[str]
+    chunks: List[ChunkDetail]
     query_type: str
     confidence: float
-    trace: list[TraceEventModel]
-    tool_results: list[ToolResultModel]
+    trace: List[TraceEventModel]
+    tool_results: List[ToolResultModel]
     memory_summary: str
-    history: list[HistoryTurn]
+    history: List[HistoryTurn]
 
 class BackendError(Exception):
     pass

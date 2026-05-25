@@ -1,6 +1,7 @@
 """validate_chunks — pure-Python relevance scoring (no extra LLM call)."""
 
 import re
+from typing import Set
 
 from src.graph.config import CONFIDENCE_THRESHOLD, MAX_RETRIEVAL_ATTEMPTS
 from src.graph.utils import traced
@@ -17,7 +18,7 @@ _STOPWORDS = {
 _TOKEN_RE = re.compile(r"[a-zA-Z]{2,}")
 
 
-def _tokens(text: str) -> set[str]:
+def _tokens(text: str) -> Set[str]:
     return {t for token in _TOKEN_RE.findall(text or "") if (t := token.lower()) not in _STOPWORDS}
 
 

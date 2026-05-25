@@ -1,5 +1,7 @@
 """call_tools — runs lightweight regex/heuristic tools when the query warrants it."""
 
+from typing import List
+
 from src.graph.tools import has_id_pattern, has_step_intent, id_extractor, step_counter
 from src.graph.utils import traced
 
@@ -10,7 +12,7 @@ def call_tools(state: dict) -> dict:
     qtype = state.get("query_type")
     chunks = state.get("chunks", [])
 
-    results: list[dict] = []
+    results: List[dict] = []
 
     if has_id_pattern(query):
         results.append(id_extractor(query))

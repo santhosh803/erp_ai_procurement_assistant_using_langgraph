@@ -1,13 +1,14 @@
 """grade_answer — LLM-as-a-Judge reflection and query rewriting."""
 
 import re
+from typing import Tuple
 
 from src.graph.config import GRADER_TEMPLATE, MAX_RETRIEVAL_ATTEMPTS
 from src.graph.utils import traced
 from src.llm_handler import generate_response
 
 
-def parse_grader_output(llm_output: str, original_query: str) -> tuple[str, str, str]:
+def parse_grader_output(llm_output: str, original_query: str) -> Tuple[str, str, str]:
     """
     Parse the structured output from the LLM grader.
     Expected format:

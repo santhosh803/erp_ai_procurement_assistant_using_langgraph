@@ -12,6 +12,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from typing import List
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -42,7 +43,7 @@ class HistoryTurn(BaseModel):
 
 class AskRequest(BaseModel):
     query: str
-    history: list[HistoryTurn] = Field(default_factory=list)
+    history: List[HistoryTurn] = Field(default_factory=list)
     memory_summary: str = ""
     session_id: str = "default"
 
@@ -69,14 +70,14 @@ class ToolResultModel(BaseModel):
 class AskResponse(BaseModel):
     query: str
     answer: str
-    sources: list[str]
-    chunks: list[ChunkDetail]
+    sources: List[str]
+    chunks: List[ChunkDetail]
     query_type: str
     confidence: float
-    trace: list[TraceEventModel]
-    tool_results: list[ToolResultModel]
+    trace: List[TraceEventModel]
+    tool_results: List[ToolResultModel]
     memory_summary: str
-    history: list[HistoryTurn]
+    history: List[HistoryTurn]
 
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────

@@ -2,6 +2,8 @@
 Constructs a context-injected prompt for the LLM using retrieved chunks.
 """
 
+from typing import List
+
 
 SYSTEM_INSTRUCTION = """You are an expert ERP Procurement Assistant specializing in SAP S/4HANA Sourcing & Procurement.
 
@@ -12,7 +14,7 @@ Do NOT make up information. Be concise, professional, and specific.
 """
 
 
-def build_prompt(query: str, retrieved_chunks: list[dict]) -> str:
+def build_prompt(query: str, retrieved_chunks: List[dict]) -> str:
     """
     Build a prompt string by injecting retrieved context into the template.
 
