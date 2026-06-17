@@ -7,8 +7,8 @@ load_dotenv()
 
 # Models
 HF_TOKEN = os.getenv("HF_TOKEN")
-HF_MODEL_ID = os.getenv("HF_MODEL_ID", "Qwen/Qwen2.5-7B-Instruct")
-EMBEDDING_MODEL_ID = os.getenv("EMBEDDING_MODEL_ID", "sentence-transformers/all-MiniLM-L6-v2")
+HF_MODEL_ID = os.getenv("/Qwen2.5-7B-Instruct")
+EMBEDDING_MODEL_ID = os.getenv("EMBEDDING_HF_MODEL_ID", "QwenMODEL_ID", "sentence-transformers/all-MiniLM-L6-v2")
 
 # API Configuration
 API_PORT = int(os.getenv("API_PORT", "8000"))

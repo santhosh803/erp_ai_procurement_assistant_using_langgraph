@@ -18,4 +18,4 @@ def get_embedder() -> HuggingFaceEmbeddings:
         model_kwargs={"device": "cpu"},
         encode_kwargs={"normalize_embeddings": True},
     )
-    return embedder
+    return embedder 
