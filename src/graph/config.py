@@ -12,7 +12,7 @@ RETRY_K = 8
 MEMORY_WINDOW = 4   # turns kept in rolling summary
 
 # Recursion safety net for the validator retry loop
-GRAPH_RECURSION_LIMIT = 10
+GRAPH_RECURSION_LIMIT = 25
 
 # Synonym expansion used on a retry retrieval pass
 SYNONYM_MAP = {

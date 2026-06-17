@@ -16,13 +16,13 @@ from dotenv import load_dotenv
 # Ensure project root is in path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from src.config import HF_TOKEN, EMBEDDING_MODEL_ID, HF_MODEL_ID
+from src.config import GROQ_API_KEY, EMBEDDING_MODEL_ID, GROQ_MODEL_ID
 from src.graph.graph import run_graph
 from src.embedder import get_embedder
 
 # ── Load Environment Variables ────────────────────────────────────────────────
 load_dotenv()
-HF_TOKEN = os.getenv("HF_TOKEN")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 
 # ── Golden Dataset of 20 Procurement QA Pairs ─────────────────────────────────
@@ -115,9 +115,9 @@ def run_pipeline_eval():
     print("  ERP Procurement Assistant — Automated RAG Evaluation")
     print("=" * 70)
 
-    if not HF_TOKEN:
-        print("\nERROR: HF_TOKEN environment variable is not set.")
-        print("Please configure HF_TOKEN in your .env file to enable evaluations.")
+    if not GROQ_API_KEY or GROQ_API_KEY == "gsk_your_key_here":
+        print("\nERROR: GROQ_API_KEY environment variable is not set or is using placeholder.")
+        print("Please configure GROQ_API_KEY in your .env file to enable evaluations.")
         sys.exit(1)
 
     print(f"\n[1/3] Running {len(GOLDEN_DATASET)} golden questions through the LangGraph pipeline...")
@@ -169,18 +169,16 @@ def run_pipeline_eval():
         from datasets import Dataset
         from ragas import evaluate
         from ragas.metrics import faithfulness, answer_relevance, context_precision
-        from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
+        from langchain_groq import ChatGroq
         
         dataset = Dataset.from_dict(data)
         
-        # Instantiate LangChain wrapper for Qwen
-        llm = HuggingFaceEndpoint(
-            repo_id=HF_MODEL_ID,
-            huggingfacehub_api_token=HF_TOKEN,
+        # Instantiate LangChain wrapper for Groq
+        chat_model = ChatGroq(
+            model=GROQ_MODEL_ID,
+            groq_api_key=GROQ_API_KEY,
             temperature=0.01,
-            max_new_tokens=512,
         )
-        chat_model = ChatHuggingFace(llm=llm)
         embeddings_model = get_embedder()
         
         print("  Evaluating Faithfulness, Context Precision, and Answer Relevance...")
@@ -220,7 +218,7 @@ def write_markdown_report(data, scores, fallback=False, error_msg=""):
     with open(report_path, "w", encoding="utf-8") as f:
         f.write("# RAG Pipeline Evaluation Report\n\n")
         f.write(f"**Date:** {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"**Model Evaluated:** `{HF_MODEL_ID}`\n")
+        f.write(f"**Model Evaluated:** `{GROQ_MODEL_ID}`\n")
         f.write(f"**Embeddings Model:** `{EMBEDDING_MODEL_ID}`\n\n")
         
         if fallback:

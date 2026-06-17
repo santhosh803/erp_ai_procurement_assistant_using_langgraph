@@ -15,4 +15,7 @@ typing-extensions>=4.7
 ragas
 datasets
 rank_bm25
+groq
+langchain-groq
+
 
