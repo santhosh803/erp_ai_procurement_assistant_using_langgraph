@@ -10,13 +10,23 @@ pinned: false
 # ERP AI Procurement Assistant
 
 A **LangGraph-powered agentic RAG** assistant for SAP S/4HANA Sourcing & Procurement.
-Built on top of FAISS and BM25 (Hybrid Search with RRF) + Qwen2.5-7B (HuggingFace Inference API), wrapped in a
+Built on top of FAISS and BM25 (Hybrid Search with RRF) + Llama-3.3-70b-versatile (Groq API), wrapped in a
 multi-node `StateGraph` with classification, retrieval validation, optional
 tool calls, LLM-as-a-Judge grading, and short-term conversational memory.
 
 The Streamlit UI surfaces the **graph execution trace** for every turn — node
 order, timings, intermediate state — so you can see exactly how each answer
 was produced.
+
+## 📺 Demo & Screenshots
+
+![ERP AI Procurement Assistant Demo](assets/erp_rag_demo.gif)
+
+*Visual walkthrough of the agentic RAG workflow trace rendering live in the Streamlit UI.*
+
+![Query and Answer Trace](assets/query_with_answer.png)
+
+*Detailed view of the node execution trace showing status, latencies, and intermediate payloads.*
 
 ---
 
@@ -71,7 +81,7 @@ The state schema, edges, and all node functions live under
 | Component | Technology |
 |-----------|-----------|
 | Agent framework | **LangGraph** (StateGraph + conditional edges) |
-| LLM | Qwen2.5-7B via HuggingFace Inference API |
+| LLM | Llama-3.3-70b-versatile via Groq API |
 | Embeddings | `all-MiniLM-L6-v2` (sentence-transformers) |
 | Retrievers | FAISS (Dense) + BM25 (Sparse) with Reciprocal Rank Fusion (RRF) |
 | Backend | FastAPI |
@@ -124,7 +134,7 @@ enhanced_erp_ai_procurement_assistant/
 ### 1. Prerequisites
 
 - Python 3.9+ (matches the Docker base image used by Hugging Face Spaces)
-- A HuggingFace API token. Copy `.env.example` to `.env` and set `HF_TOKEN`.
+- A Groq API Key. Copy `.env.example` to `.env` and set `GROQ_API_KEY`.
 
 ### 2. Install dependencies
 
